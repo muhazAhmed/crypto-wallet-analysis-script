@@ -5,3 +5,4 @@ __pycache__/
 /data/wallet_features.csv
 /data/wallet_rankings.csv
 /data/wallet_features_clean.csv
+/data/wallet_predictions.csv
