@@ -2,3 +2,4 @@ venv/
 __pycache__/
 /data/wallet_data.csv
 /data/portfolio_data.csv
+/data/wallet_features.csv
