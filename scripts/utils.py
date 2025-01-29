@@ -17,6 +17,7 @@ def format_transaction_data(transactions, wallet_address):
                 "amount": round(sol_amount, 9),  
                 "fromUser": None,
                 "toUser": None,
+                "counterparty": None,
                 "tokenAmount": None,
                 "mint": None,
                 "fee": f"{tx.get('fee', 0) / 1e9:.9f}",  
@@ -24,6 +25,8 @@ def format_transaction_data(transactions, wallet_address):
         else:
             for transfer in token_transfers:
                 token_amount = transfer.get("tokenAmount", 0)
+                counterparty = transfer.get("toUserAccount") if transfer.get("fromUserAccount") == wallet_address else transfer.get("fromUserAccount")
+                
                 formatted_transactions.append({
                     "wallet_address": wallet_address,
                     "txHash": tx.get("signature", ""),
@@ -31,6 +34,7 @@ def format_transaction_data(transactions, wallet_address):
                     "amount": round(sol_amount, 9) if sol_amount > 0 else round(token_amount, 9),   
                     "fromUser": transfer.get("fromUserAccount"),
                     "toUser": transfer.get("toUserAccount"),
+                    "counterparty": counterparty,
                     "tokenAmount": transfer.get("tokenAmount"),
                     "mint": transfer.get("mint"),
                     "fee": f"{tx.get('fee', 0) / 1e9:.9f}",
