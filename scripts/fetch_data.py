@@ -1,6 +1,7 @@
 from pathlib import Path
 import pandas as pd
 import requests
+import time  # Added for rate limiting
 
 def fetch_transaction_details(wallet_address, api_key_id):  
     """  
@@ -16,45 +17,41 @@ def fetch_transaction_details(wallet_address, api_key_id):
 
     if response.status_code == 200:  
         transaction_data = response.json()  
-        return transaction_data  
+        return transaction_data if transaction_data else []  # Return empty list instead of None
     else:  
         print(f"Failed to fetch transaction details for {wallet_address}: {response.status_code} - {response.text}")  
-        return None  
+        return []  # Return empty list if API call fails
 
 
 def main():  
-    # Your Helius API key ID  
     api_key_id = 'b951bf96-d039-4a70-879e-90416334d353'  
     
-    # Load wallet addresses from CSV without a header  
     script_dir = Path(__file__).resolve().parent
     data_file_path = script_dir.parent / 'data' / 'top_traders_account_numbers.csv'
     addresses_df = pd.read_csv(data_file_path, header=None)
     
-    # Assuming wallet addresses are in the first column (index 0)
-    wallet_addresses = addresses_df[0].tolist()  # This will refer to the first column by index 0
+    wallet_addresses = addresses_df[0].tolist()
     all_transactions = []  
 
-    # Fetch data for each wallet address  
     for wallet_address in wallet_addresses:  
         transactions = fetch_transaction_details(wallet_address, api_key_id)  
 
         if transactions:  
-            # Append wallet address and transaction details to the results  
             for transaction in transactions:  
-                transaction['wallet_address'] = wallet_address  # Include the wallet address in the transaction data  
+                transaction['wallet_address'] = wallet_address  
                 all_transactions.append(transaction)  
+        
+        time.sleep(1)  # Rate limiting (Wait 1 second between API calls)
 
-    # Ensure the directory exists before saving the file  
-    output_dir = script_dir.parent / 'data'  # Set output directory
-    output_dir.mkdir(parents=True, exist_ok=True)  # Create directory if it doesn't exist
+    output_dir = script_dir.parent / 'data'  
+    output_dir.mkdir(parents=True, exist_ok=True)  
 
-    # Save fetched data to wallet_data.csv  
     if all_transactions:  
         output_df = pd.DataFrame(all_transactions)  
         output_df.to_csv(output_dir / 'wallet_data.csv', index=False)  
         print("Fetched data saved to wallet_data.csv")  
+    else:
+        print("No transaction data found for any wallets.")
 
 if __name__ == "__main__":  
     main()
-
