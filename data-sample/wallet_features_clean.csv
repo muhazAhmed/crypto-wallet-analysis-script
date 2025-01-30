@@ -1,0 +1,4 @@
+wallet_address,total_transactions,days_active,trading_frequency,initial_investment,final_portfolio_value,roi,activity_score,portfolio_volatility,loss_ratio,sharpe_ratio
+3AWDTDGZiW8joyfA52LKL7GUWLoKBCBUBLUE5JoWgBCu,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.6092168249533252,0.0,1.0000000000000002
+7PypumCQ4wco2bV4UAjCwbrdCdnWwyAacjxRhX3yuz8R,0.6875,0.0,0.6875,0.9999999999999999,0.002200717864838067,0.0,0.6875,0.0,0.0,0.0
+EwkH5aEmKEAC2M8eh8x8XVkNyPTZt1PSUH875bXrVmjP,1.0,0.0,1.0,0.0,0.0,0.0638334625828748,1.0,0.9999999999999999,0.0,0.03786758364362335

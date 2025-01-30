@@ -26,6 +26,8 @@ crypto-wallet-analysis-script/
 │   ├── wallet_features_clean.csv    # Normalized features dataset
 │   ├── top_traders_account_numbers.csv # Input wallet addresses
 │
+|── data-sample/                     # Sample data of all scripts
+|
 │── scripts/
 │   ├── fetch_data.py                # Fetches transaction & portfolio data
 │   ├── feature_engineering.py       # Computes financial features
